@@ -21,12 +21,12 @@ DWORD ScriptContextVFTable = x(0x110D470);
 DWORD grabGlobalStateIndex(DWORD ScriptContext, int idx)
 {
 	DWORD* context = reinterpret_cast<DWORD*>(ScriptContext);
-	return context[idx] - (DWORD)&context[idx];
+	return context[idx] + (int)&context[idx];
 }
 
 using Bridge::m_rL;
 using Bridge::m_L;
-#define r_setidentity(rL, i) DWORD* identity  = (DWORD*)(rL - 32); *identity ^= (i ^ (unsigned __int8)*identity) & 0x1F;
+#define r_setidentity(rL, i) DWORD* identity  = (DWORD*)(rL - 8); *identity ^= (i ^ (unsigned __int8)*identity) & 0x1F;
 
 
 
