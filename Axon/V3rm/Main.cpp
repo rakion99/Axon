@@ -16,12 +16,12 @@ using namespace std;
 
 
 DWORD ScriptContext;
-DWORD ScriptContextVFTable = x(0x110D470);
+DWORD ScriptContextVFTable = x(0x1117F74);
 
 DWORD grabGlobalStateIndex(DWORD ScriptContext, int idx)
 {
 	DWORD* context = reinterpret_cast<DWORD*>(ScriptContext);
-	return context[idx] + (int)&context[idx];
+	return context[idx] ^ (unsigned int)&context[idx];
 }
 
 using Bridge::m_rL;
