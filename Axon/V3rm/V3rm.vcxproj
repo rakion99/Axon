@@ -78,7 +78,7 @@
     <IncludePath>C:\Users\jeanc\Desktop\Lua;$(IncludePath)</IncludePath>
     <SourcePath>C:\Users\jeanc\Desktop\Lua;$(SourcePath)</SourcePath>
     <LibraryPath>C:\Users\jeanc\Desktop\Lua;$(LibraryPath)</LibraryPath>
-    <TargetName>disisshit</TargetName>
+    <TargetName>Axon</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -87,7 +87,7 @@
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>C:\Users\jeanc\Desktop\Lua;$(IncludePath)</IncludePath>
     <SourcePath>C:\Users\jeanc\Desktop\Lua;$(IncludePath)</SourcePath>
-    <TargetName>disisshit</TargetName>
+    <TargetName>Axon</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
