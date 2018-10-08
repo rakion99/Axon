@@ -12,8 +12,6 @@ extern "C" {
 #include "Lua\llimits.h"
 }
 
-
-
 int registry;
 
 namespace Bridge
@@ -81,12 +79,10 @@ namespace Bridge
 
 	void push(lua_State* L, DWORD rL, int index)
 	{
-		printf("ROBLOX: %d\n", lua_type(L, index));
 		switch (lua_type(L, index))
 		{
 		case LUA_TLIGHTUSERDATA:
 			r_lua_pushlightuserdata(rL, nullptr);
-
 			break;
 		case LUA_TNIL:
 			r_lua_pushnil(rL);
@@ -135,7 +131,6 @@ namespace Bridge
 	}
 	void push(DWORD rL, lua_State* L, int index)
 	{
-		printf("VANILLA: %d\r\n", r_lua_type(rL, index));
 		switch (r_lua_type(rL, index))
 		{
 		case R_LUA_TLIGHTUSERDATA:
@@ -177,7 +172,6 @@ namespace Bridge
 		case R_LUA_TUSERDATA:
 			r_lua_pushvalue(rL, index);
 			r_lua_pushstring(rL, std::to_string(++registry).c_str());
-
 			r_lua_pushvalue(rL, -2);
 			r_lua_settable(rL, LUA_REGISTRYINDEX);
 			r_lua_pop(rL, 1);
@@ -186,7 +180,6 @@ namespace Bridge
 			lua_pushstring(L, std::to_string(registry).c_str());
 			lua_settable(L, LUA_REGISTRYINDEX);
 			r_lua_getmetatable(rL, index);
-
 			Bridge::push(rL, L, -1);
 			r_lua_pop(rL, 1);
 			lua_setmetatable(L, -2);
@@ -205,7 +198,6 @@ namespace Bridge
         	lua_pushstring(L, "This metatable is locked");
         	lua_setfield(L, -2, "__metatable");
 		lua_close(L);
-
 	}
 
 	int resumea(DWORD thread)
@@ -216,7 +208,6 @@ namespace Bridge
 			Bridge::push(thread, L, arg);
 		return lua_resume(L, nargs);
 		lua_close(L);
-
 	}
 
 
@@ -252,9 +243,7 @@ namespace Bridge
 
 				return lua_yield(L, 0);
 			}
-			printf("RVX VANILLA ERROR: %s\n", r_lua_tostring(rL, -1));
 			return 0;
-			MessageBoxA(NULL, "SUCCESS VANILLA", "vanillabridge", NULL);
 			delete[] errormessage;
 		}
 
@@ -267,7 +256,6 @@ namespace Bridge
 
 		return args;
 		lua_close(L);
-		MessageBoxA(NULL, "SUCCESS VANILLA 2", "vanillabridge", NULL);
 	}
 
 	int rbxFunctionBridge(DWORD rL)
@@ -294,7 +282,6 @@ namespace Bridge
 			r_lua_pushcclosure(m_rL, Bridge::int3breakpoints[1], 1);
 			return -1;
 		case LUA_ERRRUN:
-				printf("RVX ROBLOX ERROR: %s\n", lua_tostring(L, -1));
 				return -1;
 		default: break;
 		}
@@ -308,6 +295,5 @@ namespace Bridge
 
 		return args;
 		lua_close(L);
-
 	}
 }
