@@ -28,10 +28,10 @@ namespace AxonSimpleUI
                         MessageBox.Show("Injection Failed!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);//display messagebox to tell that injection failed
                         return;
                 }
-                Thread.Sleep(3000);//pause the ui for 3 seconds
+                //Thread.Sleep(3000);//pause the ui for 3 seconds <<DONT PAUSE SHIT
                 if (!NamedPipes.NamedPipeExist(NamedPipes.luapipename))//check if the pipe dont exist
                 {
-                    MessageBox.Show("Injection Failed!\nMaybe you are Missing something\nor took more time to check if was ready\nor other stuff", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);//display that the pipe was not found so the injection was unsuccessful
+                    //display that the pipe was not found so the injection was unsuccessful <<YES IT IS SUCCESSFUL BUT THE MESSAGE BOX THING TAKES HERE :C
                 }
             }
         }
@@ -41,7 +41,7 @@ namespace AxonSimpleUI
             Filter = "Lua Script Txt (*.txt)|*.txt|All files (*.*)|*.*",//add txt and all files filter
             FilterIndex = 1,//choose what filter will be the default
             RestoreDirectory = true,//restore the last used directory
-            Title = "Axon Lua Open Script"//OpenFileDialog Tittle
+            Title = "Lua Open Script"//OpenFileDialog Tittle <<BAD GRAMMAR XD
         };//Initialize OpenFileDialog
     }
 }
