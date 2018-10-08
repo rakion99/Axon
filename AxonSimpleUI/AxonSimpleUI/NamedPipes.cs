@@ -58,7 +58,7 @@ namespace AxonSimpleUI
                             namedPipeClientStream.Connect();
                             using (StreamWriter streamWriter = new StreamWriter(namedPipeClientStream, System.Text.Encoding.Default, 999999))//changed buffer to max 1mb since default buffer is 1kb
                             {
-                                streamWriter.Write(script);
+                                streamWriter.Write("spawn(function()\nfunction GetObjects(assetId)\nlocal obj = game:GetService(\"InsertService\"):LoadLocalAsset(assetId)\nreturn { obj };\nend\n\nfunction ensure(obj)\nfor _,child in pairs(obj:GetChildren()) do \nif (child.ClassName == \"LocalScript\") then\nloadstring(child.Source)();\nensure(child);\nelse\nensure(child);\nend\nend\nend" + script + "\nend)"); // lol skidded getobjects needs to be here cause i think sk1ds will say GETOBJECTS WORKING XD
                                 streamWriter.Dispose();
                             }
                             namedPipeClientStream.Dispose();
