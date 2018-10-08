@@ -75,9 +75,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\jeanc\Desktop\Lua;$(IncludePath)</IncludePath>
-    <SourcePath>C:\Users\jeanc\Desktop\Lua;$(SourcePath)</SourcePath>
-    <LibraryPath>C:\Users\jeanc\Desktop\Lua;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\User\Desktop\Lua;$(IncludePath)</IncludePath>
+    <SourcePath>C:\Users\User\Desktop\Lua;$(SourcePath)</SourcePath>
+    <LibraryPath>C:\Users\User\Desktop\Lua;$(LibraryPath)</LibraryPath>
     <TargetName>Axon</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -131,7 +131,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Users\jeanc\Desktop\Lua</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\User\Desktop\Lua</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
