@@ -1,4 +1,3 @@
-
 #include "globals.h"
 #include "Bridge.h"
 #include <string>
@@ -15,7 +14,7 @@
 using namespace std;
 
 DWORD ScriptContext;
-DWORD ScriptContextVFTable = x(0x114B4E0);
+DWORD ScriptContextVFTable = x(0x1397508);
 
 DWORD grabGlobalStateIndex(DWORD ScriptContext, int idx)
 {
@@ -44,8 +43,8 @@ DWORD WINAPI input(PVOID lvpParameter)
 		PIPE_ACCESS_DUPLEX | PIPE_TYPE_BYTE | PIPE_READMODE_BYTE,
 		PIPE_WAIT,
 		1,
-		999999,
-		999999,
+		10000000,
+		10000000,
 		NMPWAIT_USE_DEFAULT_WAIT,
 		NULL);
 	while (hPipe != INVALID_HANDLE_VALUE)
@@ -197,12 +196,17 @@ void main()
 	PushGlobal(m_rL, m_L, "Delay");
 	PushGlobal(m_rL, m_L, "tick");
 	PushGlobal(m_rL, m_L, "LoadLibrary");
+	PushGlobal(m_rL, m_L, "DockWidgetPluginGuiInfo");
+	PushGlobal(m_rL, m_L, "PathWaypoint");
+	PushGlobal(m_rL, m_L, "shared");
 	lua_register(m_L, "getrawmetatable", getRawMetaTable);
 	lua_newtable(m_L);
 	lua_setglobal(m_L, "_G");
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)input, NULL, NULL, NULL);
-	printf("RVX INJECTED!\n");
-	MessageBoxA(NULL, "Africanus is better than you\nKai fucked me on my house :D\nAero is Gay\nSettings bombed a school\n<Aspect> bditt is less gay than Pudding Mug\nxGladius is less gay than Kai but still true gay love\nTrapFX is a weeb", "The Truth", MB_OK);
+	*(DWORD*)Context = 6;
+	system("msg * Hello user? You seems like you are currently using Windows 7 or lower, please upgrade to Windows 10 to use this exploit. :D"); // msg thing only works for windows 7 or lower
+	MessageBoxA(NULL, "Skid Exploit injected! Enjoy! :D", "Injected!", MB_OK);
+	system("start https://yourwebsite.com/"); // thanks skid8r source
 }
 
 
@@ -219,6 +223,5 @@ BOOL APIENTRY DllMain(HMODULE Module, DWORD Reason, void* Reserved)
 		break;
 	default: break;
 	}
-
 	return TRUE;
 }
