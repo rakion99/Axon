@@ -14,7 +14,7 @@
 using namespace std;
 
 DWORD ScriptContext;
-DWORD ScriptContextVFTable = x(0x1397508);
+DWORD ScriptContextVFTable = x(0x13A1644);
 
 DWORD grabGlobalStateIndex(DWORD ScriptContext, int idx)
 {
@@ -43,8 +43,8 @@ DWORD WINAPI input(PVOID lvpParameter)
 		PIPE_ACCESS_DUPLEX | PIPE_TYPE_BYTE | PIPE_READMODE_BYTE,
 		PIPE_WAIT,
 		1,
-		10000000,
-		10000000,
+		999999,
+		999999,
 		NMPWAIT_USE_DEFAULT_WAIT,
 		NULL);
 	while (hPipe != INVALID_HANDLE_VALUE)
