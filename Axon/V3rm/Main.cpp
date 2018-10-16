@@ -79,42 +79,42 @@ DWORD WINAPI input(PVOID lvpParameter)
 	}
 }
 
+namespace Memory { // SKIDDED OFF ZERO'S MEMORY SCANNER
+	bool Compare(const char* pData, const char* bMask, const char* szMask)
+	{
+		while (*szMask) {
+			if (*szMask != '?') {
+				if (*pData != *bMask) return 0;
+			}
+			++szMask, ++pData, ++bMask;
+		}
+		return 1;
+	}
 
-bool CompareData(const char* Data, const char* Pattern, const char* Mask) {
-	while (*Mask) {
-		if (*Mask != '?') {
-			if (*Data != *Pattern) {
-				return false;
-			};
-		};
-		++Mask;
-		++Data;
-		++Pattern;
-	};
-	return true;
-};
-
-
-DWORD ScanForScriptContext(const char* SCVFT_Offsetted) {
-	MEMORY_BASIC_INFORMATION BasicMemoryInformation = {};
-	SYSTEM_INFO SystemInformation = {};
-	GetSystemInfo(&SystemInformation);
-	DWORD StartingMemorySearchPosition = (DWORD)SystemInformation.lpMinimumApplicationAddress;
-	DWORD MaximumSearchBoundary = (DWORD)SystemInformation.lpMaximumApplicationAddress;
-	do {
-		while (VirtualQuery((void*)StartingMemorySearchPosition, &BasicMemoryInformation, sizeof(BasicMemoryInformation))) {
-			if ((BasicMemoryInformation.Protect & PAGE_READWRITE) && !(BasicMemoryInformation.Protect & PAGE_GUARD)) {
-				for (DWORD Key = (DWORD)(BasicMemoryInformation.BaseAddress); ((Key - (DWORD)(BasicMemoryInformation.BaseAddress) < BasicMemoryInformation.RegionSize)); ++Key) {
-					if (CompareData((const char*)Key, SCVFT_Offsetted, "xxxx")) {
-						return Key;
-					};
-				};
-			};
-			StartingMemorySearchPosition += BasicMemoryInformation.RegionSize;
-		};
-	} while (StartingMemorySearchPosition < MaximumSearchBoundary);
-	return 0x0;
-};
+	DWORD Scan()
+	{
+		MEMORY_BASIC_INFORMATION MBI = { 0 };
+		SYSTEM_INFO SI = { 0 };
+		GetSystemInfo(&SI);
+		DWORD Start = (DWORD)SI.lpMinimumApplicationAddress;
+		DWORD End = (DWORD)SI.lpMaximumApplicationAddress;
+		do
+		{
+			while (VirtualQuery((void*)Start, &MBI, sizeof(MBI))) {
+				if ((MBI.Protect & PAGE_READWRITE) && !(MBI.Protect & PAGE_GUARD))
+				{
+					for (DWORD i = (DWORD)(MBI.BaseAddress); i - (DWORD)(MBI.BaseAddress) < MBI.RegionSize; ++i)
+					{
+						if (Compare((const char*)i, (char *)ScriptContextVFTable, "xxxx"))
+							return i;
+					}
+				}
+				Start += MBI.RegionSize;
+			}
+		} while (Start < End);
+		return 0;
+	}
+}
 
 int getRawMetaTable(lua_State *L) {
 	Bridge::push(L, m_rL, 1);
@@ -143,7 +143,7 @@ static int UserDataGC(lua_State *Thread) {
 }
 void main()
 {
-	ScriptContext = ScanForScriptContext((char*)&ScriptContextVFTable);
+	ScriptContext = Memory::Scan();
 	m_rL = (ScriptContext, 164);
 	m_L = luaL_newstate();
 	Bridge::VehHandlerpush();
@@ -201,7 +201,7 @@ void main()
 	lua_setglobal(m_L, "_G");
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)input, NULL, NULL, NULL);
 	printf("RVX INJECTED!\n");
-	MessageBoxA(NULL, "Africanus is better than you\nKai fucked me on my house :D\nAero is Gay\nSettings bombed a school\n<Aspect> bditt is less gay than Pudding Mug\nxGladius is less gay than Kai but still true gay love\nTrapFX is a weeb", "The Truth", MB_OK);
+	MessageBoxA(NULL, "Injected!", "tweakedAxon", MB_OK);
 }
 
 
