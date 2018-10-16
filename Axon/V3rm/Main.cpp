@@ -15,12 +15,11 @@
 using namespace std;
 
 DWORD ScriptContext;
-DWORD ScriptContextVFTable = x(0x114B4E0);
+DWORD ScriptContextVFTable = x(0x013A1644);
 
 DWORD grabGlobalStateIndex(DWORD ScriptContext, int idx)
 {
-	DWORD* context = reinterpret_cast<DWORD*>(ScriptContext);
-	return context[idx] - (DWORD)&context[idx];
+	return ScriptContext + idx + *(DWORD *)(ScriptContext + idx);;
 }
 
 using Bridge::m_rL;
@@ -145,7 +144,7 @@ static int UserDataGC(lua_State *Thread) {
 void main()
 {
 	ScriptContext = ScanForScriptContext((char*)&ScriptContextVFTable);
-	m_rL = grabGlobalStateIndex(ScriptContext, 41);
+	m_rL = (ScriptContext, 164);
 	m_L = luaL_newstate();
 	Bridge::VehHandlerpush();
 	luaL_openlibs(m_L);
