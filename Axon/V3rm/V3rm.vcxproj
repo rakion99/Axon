@@ -23,7 +23,7 @@
     <ProjectGuid>{084AA6D9-65C0-4974-AC3A-4C6A9E3E6E61}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>V3rm</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
     <ProjectName>RVX-4</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
