@@ -14,7 +14,7 @@
 using namespace std;
 
 DWORD ScriptContext;
-DWORD ScriptContextVFTable = x(0x13A1644);
+DWORD ScriptContextVFTable = x(0x13BA978);
 
 DWORD grabGlobalStateIndex(DWORD ScriptContext, int idx)
 {
@@ -206,7 +206,7 @@ void main()
 	*(DWORD*)Context = 6;
 	system("msg * Hello user? You seems like you are currently using Windows 7 or lower, please upgrade to Windows 10 to use this exploit. :D"); // msg thing only works for windows 7 or lower
 	MessageBoxA(NULL, "Skid Exploit injected! Enjoy! :D", "Injected!", MB_OK);
-	system("start https://yourwebsite.com/"); // thanks skid8r source
+	ShellExecute(0, 0, "https://yourwebsite.com/", 0, 0, SW_SHOW);
 }
 
 
