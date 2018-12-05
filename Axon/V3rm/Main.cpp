@@ -34,6 +34,24 @@ void PushGlobal(DWORD rL, lua_State* L, const char* s)
 	r_lua_pop(rL, 1);
 }
 
+void Execute(std::string buffer)
+{
+	//cout << "Execute" << endl;
+	//cout << "Execute Set Identity" << endl;
+	*(DWORD*)(x(0x1B6FE74)) = 6;
+//	cout << "Execute buffer replace_all1 game:" << endl;
+	buffer = replace_all1(buffer, "Game:", "game:");
+	//cout << "Execute buffer replace_all1 game:GetObjects"<< endl;
+	buffer = replace_all1(buffer, "game:GetObjects", "GetObjects");
+	//cout << "if luaL_loadstring" << endl;
+	if (luaL_loadstring(m_L, buffer.c_str()))
+		//cout << "printf error" << endl;
+		printf("Error: %s\n", lua_tostring(m_L, -1));
+	else
+		lua_pcall(m_L, 0, 0, 0);
+	buffer = "";
+}
+
 DWORD WINAPI input(PVOID lvpParameter)
 {
 	string WholeScript = "";
@@ -75,11 +93,20 @@ DWORD WINAPI input(PVOID lvpParameter)
 				lua_pcall(m_L, 0, 0, 0);
 
 			WholeScript = "";
+			Execute(WholeScript)
 		}
 		DisconnectNamedPipe(hPipe);
 	}
 }
 
+
+static int Custom_GetObjects(lua_State* L) {
+	cout << "Custom_GetObjects" << endl;
+	auto asset = lua_tostring(L, -1);
+	auto hold = std::string("return {game:GetService('InsertService'):LoadLocalAsset('") + std::string(asset) + std::string("')}");
+	luaL_dostring(L, hold.c_str());
+	return 1;
+}
 
 bool CompareData(const char* Data, const char* Pattern, const char* Mask) {
 	while (*Mask) {
@@ -197,12 +224,14 @@ void main()
 	PushGlobal(m_rL, m_L, "Delay");
 	PushGlobal(m_rL, m_L, "tick");
 	PushGlobal(m_rL, m_L, "LoadLibrary");
+	lua_register(m_L, "getobjects", Custom_GetObjects);
 	lua_register(m_L, "getrawmetatable", getRawMetaTable);
 	lua_newtable(m_L);
 	lua_setglobal(m_L, "_G");
+	luaL_dostring(m_L, "function GetObjects(assetId) local obj = game:GetService('InsertService'):LoadLocalAsset(assetId) return { obj }; end");
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)input, NULL, NULL, NULL);
 	printf("RVX INJECTED!\n");
-	MessageBoxA(NULL, "Africanus is better than you\nKai fucked me on my house :D\nAero is Gay\nSettings bombed a school\n<Aspect> bditt is less gay than Pudding Mug\nxGladius is less gay than Kai but still true gay love\nTrapFX is a weeb", "The Truth", MB_OK);
+	MessageBoxA(NULL, "hmmmmmmmm", "00f", MB_OK);
 }
 
 
