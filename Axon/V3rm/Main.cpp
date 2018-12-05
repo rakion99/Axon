@@ -174,6 +174,8 @@ void main()
 {
 	ScriptContext = ScanForScriptContext((char*)&ScriptContextVFTable);
 	m_rL = grabGlobalStateIndex(ScriptContext, 41);
+	lua_pushcfunction(m_L, Bridge::GlobalsIndex);
+
 	m_L = luaL_newstate();
 	Bridge::VehHandlerpush();
 	luaL_openlibs(m_L);
