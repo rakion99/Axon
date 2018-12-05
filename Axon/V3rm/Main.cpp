@@ -33,19 +33,20 @@ void PushGlobal(DWORD rL, lua_State* L, const char* s)
 	lua_setglobal(L, s);
 	r_lua_pop(rL, 1);
 }
-
+std::string replace_all1(std::string subject, const std::string& search, const std::string& replace) {
+	size_t pos = 0;
+	while ((pos = subject.find(search, pos)) != std::string::npos) {
+		subject.replace(pos, search.length(), replace);
+		pos += replace.length();
+	}
+	return subject;
+}
 void Execute(std::string buffer)
 {
-	//cout << "Execute" << endl;
-	//cout << "Execute Set Identity" << endl;
 	*(DWORD*)(x(0x1B6FE74)) = 6;
-//	cout << "Execute buffer replace_all1 game:" << endl;
 	buffer = replace_all1(buffer, "Game:", "game:");
-	//cout << "Execute buffer replace_all1 game:GetObjects"<< endl;
 	buffer = replace_all1(buffer, "game:GetObjects", "GetObjects");
-	//cout << "if luaL_loadstring" << endl;
 	if (luaL_loadstring(m_L, buffer.c_str()))
-		//cout << "printf error" << endl;
 		printf("Error: %s\n", lua_tostring(m_L, -1));
 	else
 		lua_pcall(m_L, 0, 0, 0);
