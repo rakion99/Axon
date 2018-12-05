@@ -219,7 +219,26 @@ namespace Bridge
 
 	}
 
-
+static int GlobalsIndex(lua_State *Thread) {
+	try {
+		int RThread = r_lua_newthread(m_rL);
+		if (!RThread) return luaL_error(Thread, "Roblox's Thread Was Incorrect");
+		if (lua_type(Thread, 2) != LUA_TSTRING) return luaL_error(Thread, "Argument 2 Expected String, Got %s", lua_typename(Thread, lua_type(Thread, 1)));
+		r_lua_getglobal(RThread, lua_tostring(Thread, 2));
+	        printf("Wrapping Cached Global: %s", lua_tostring(Thread, 2));
+		if (r_lua_type(RThread, -1) > R_LUA_TNIL) {
+			Bridge::push(RThread, Thread, -1);
+			return 1;
+		}
+	}
+	catch (exception e) {
+		return luaL_error(Thread, "%s", e.what());
+	}
+	catch (...) {
+		return luaL_error(Thread, "C++ exception thrown");
+	}
+	return 0;
+}
 
 
 	int vanillaFunctionBridge(lua_State* L)
