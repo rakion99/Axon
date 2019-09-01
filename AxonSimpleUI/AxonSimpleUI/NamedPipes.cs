@@ -17,31 +17,26 @@ namespace AxonSimpleUI
         //function to check if the pipe exist
         public static bool NamedPipeExist(string pipeName)
         {
-            bool result;
             try
             {
-                int timeout = 0;
-                if (!WaitNamedPipe(Path.GetFullPath(string.Format("\\\\\\\\.\\\\pipe\\\\{0}", pipeName)), timeout))
+                if (!WaitNamedPipe($"\\\\.\\pipe\\{pipeName}", 0))
                 {
                     int lastWin32Error = Marshal.GetLastWin32Error();
                     if (lastWin32Error == 0)
                     {
-                        result = false;
-                        return result;
+                        return false;
                     }
                     if (lastWin32Error == 2)
                     {
-                        result = false;
-                        return result;
+                        return false;
                     }
                 }
-                result = true;
+                return true;
             }
             catch (Exception)
             {
-                result = false;
+                return false;
             }
-            return result;
         }
 
         //lua pipe function

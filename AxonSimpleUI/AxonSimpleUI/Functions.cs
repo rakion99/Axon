@@ -19,7 +19,7 @@ namespace AxonSimpleUI
                 switch (Injector.DllInjector.GetInstance.Inject("RobloxPlayerBeta", AppDomain.CurrentDomain.BaseDirectory + exploitdllname))//Process name and dll directory
                 {
                     case Injector.DllInjectionResult.DllNotFound://if can't find the dll
-                        MessageBox.Show("Couldn't find " + exploitdllname, "Dll was not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);//display messagebox to tell that dll was not found
+                        MessageBox.Show($"Couldn't find {exploitdllname}", "Dll was not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);//display messagebox to tell that dll was not found
                         return;
                     case Injector.DllInjectionResult.GameProcessNotFound://if can't find the process
                         MessageBox.Show("Couldn't find RobloxPlayerBeta.exe!", "Target process was not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);//display messagebox to tell that proccess was not found
@@ -38,10 +38,10 @@ namespace AxonSimpleUI
 
         public static OpenFileDialog openfiledialog = new OpenFileDialog
         {
-            Filter = "Lua Script Txt (*.txt)|*.txt|All files (*.*)|*.*",//add txt and all files filter
+            Filter = "Script File|*.txt;*.lua|All files (*.*)|*.*",//add txt,lua and all files filter
             FilterIndex = 1,//choose what filter will be the default
             RestoreDirectory = true,//restore the last used directory
-            Title = "Axon Lua Open Script"//OpenFileDialog Tittle
+            Title = "Axon Open Script"//OpenFileDialog Tittle
         };//Initialize OpenFileDialog
     }
 }
