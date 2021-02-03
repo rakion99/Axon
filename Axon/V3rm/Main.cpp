@@ -201,8 +201,7 @@ void main()
 	lua_newtable(m_L);
 	lua_setglobal(m_L, "_G");
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)input, NULL, NULL, NULL);
-	printf("RVX INJECTED!\n");
-	MessageBoxA(NULL, "Africanus is better than you\nKai fucked me on my house :D\nAero is Gay\nSettings bombed a school\n<Aspect> bditt is less gay than Pudding Mug\nxGladius is less gay than Kai but still true gay love\nTrapFX is a weeb", "The Truth", MB_OK);
+	MessageBoxA(NULL, "Successfully injected Axon into Roblox", "Success!", MB_OK);
 }
 
 
