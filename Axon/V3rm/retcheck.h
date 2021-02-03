@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include <map>
+#include <stdexcept>
 
 /*
 * @ Title: Retcheck bypass
